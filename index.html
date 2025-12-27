@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rajdip Deb - Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+<style>
+:root {
+    --primary: #00b4d8;
+    --primary-dark: #0096b4;
+    --dark: #1a1a2e;
+    --light: #f8f9fa;
+    --muted: #6c757d;
+    --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+    --shadow-md: 0 10px 25px rgba(0,0,0,0.1);
+    --shadow-lg: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', system-ui, -apple-system, sans-serif; scroll-behavior:smooth; }
+body { background: var(--light); color: var(--dark); line-height:1.6; overflow-x:hidden; }
+
+h1,h2,h3{ font-weight:800; letter-spacing:-0.5px; }
+p{ color:var(--muted); }
+a{ text-decoration:none; transition:0.3s ease; }
+
+/* Animations */
+@keyframes fadeInUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
+
+/* Navigation */
+nav {
+    position: sticky; top:0; width:100%; background:rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px); padding:15px 5%; display:flex; justify-content:flex-end; gap:30px; font-weight:600;
+    border-bottom:1px solid rgba(0,0,0,0.05); z-index:100;
+}
+nav a { color:var(--dark); font-size:0.95rem; position:relative; }
+nav a:hover { color:var(--primary); text-shadow:0 0 5px rgba(0,180,216,0.5); }
+nav a::after { content:''; position:absolute; width:0; height:2px; bottom:-4px; left:0; background-color:var(--primary); transition:0.3s ease-in-out; }
+nav a:hover::after { width:100%; }
+
+/* Scroll Progress */
+#scroll-progress {
+    position: fixed; top:0; left:0; height:4px; background:var(--primary); width:0%; z-index:101;
+    transition: width 0.1s linear; box-shadow:0 0 8px var(--primary);
+}
+
+/* Background Slideshow */
+#background-slideshow { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1; overflow:hidden; background-color: var(--dark);}
+#background-slideshow > div { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0;
+    animation: imageSwitch 15s infinite; background-size:cover; background-position:center; filter:grayscale(10%) blur(1px) brightness(0.5); }
+@keyframes imageSwitch {0%{opacity:0;}1%{opacity:1; transform:scale(1.05);}18%{opacity:1; transform:scale(1.01);}20%{opacity:0; transform:scale(1.0);}100%{opacity:0;}}
+#slideshow-img-1{background-image:url('https://images.unsplash.com/photo-1549692520-21912d0833a7?q=80&w=2071&auto=format&fit=crop');}
+#slideshow-img-2{background-image:url('https://images.unsplash.com/photo-1516110833961-725d194d2a17?q=80&w=2070&auto=format&fit=crop'); animation-delay:3s;}
+#slideshow-img-3{background-image:url('https://images.unsplash.com/photo-1506744038136-46e742678693?q=80&w=2070&auto=format&fit=crop'); animation-delay:6s;}
+#slideshow-img-4{background-image:url('https://images.unsplash.com/photo-1574024220790-256ffb8e8f81?q=80&w=2070&auto=format&fit=crop'); animation-delay:9s;}
+#slideshow-img-5{background-image:url('https://images.unsplash.com/photo-1515886657613-fa6c7e3f22da?q=80&w=2070&auto=format&fit=crop'); animation-delay:12s;}
+
+/* Hero Section */
+.hero{
+    text-align:center; padding:100px 20px; max-width:800px; margin:50px auto 80px auto;
+    border-radius:16px; animation:fadeInUp 0.8s ease-out; position:relative; z-index:50;
+}
+#hero-particles{ position:absolute; top:0; left:0; width:100%; height:100%; z-index:0; }
+.hero h1, .hero h2, .btn{ position:relative; z-index:10; }
+.hero h1{ font-size:3rem; margin-bottom:15px; transition: all 0.3s ease; opacity:0; transform:translateX(-30px);}
+.hero h2{ font-size:1.5rem; margin-bottom:35px; color:var(--primary); transition: all 0.3s ease; opacity:0;}
+.btn{ display:inline-block; background:var(--primary); color:white; padding:14px 32px; border-radius:50px; font-weight:700; box-shadow:var(--shadow-sm); transition: all 0.3s cubic-bezier(0.23,1,0.32,1); opacity:0; transform:translateY(20px);}
+.btn:hover{ background:var(--primary-dark); transform:translateY(-3px); box-shadow:var(--shadow-md);}
+.btn:active{ transform:scale(0.98); box-shadow:var(--shadow-sm); }
+
+/* Work Section */
+.work-section{ padding:50px 5% 100px 5%; background:white; position:relative; }
+.section-title{text-align:center; font-size:2.5rem; margin-bottom:50px;}
+.work-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; max-width:1200px; margin:0 auto;}
+.project-card{ background:white; border-radius:16px; overflow:hidden; border:1px solid rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); height:100%; display:flex; flex-direction:column; transform-style: preserve-3d; transform: perspective(1000px);}
+.project-card:hover{ transform: translateY(-8px) perspective(1000px); box-shadow: var(--shadow-md); border-color:transparent; }
+.project-image-container{ width:100%; height:200px; overflow:hidden; position:relative; }
+.project-image-container img{ width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease;}
+.project-card:hover .project-image-container img{ transform:scale(1.08); }
+.project-info{ padding:25px; flex-grow:1; display:flex; flex-direction:column; }
+.project-info h3{ font-size:1.4rem; margin-bottom:10px; color: var(--dark);}
+.project-info p{ margin-bottom:20px; flex-grow:1;}
+.project-link-text{ color: var(--primary); font-weight:700; font-size:0.9rem;}
+
+/* About Section */
+.about-section{ padding:100px 5%; max-width:1000px; margin:auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:60px; align-items:center;}
+.profile-pic-container{text-align:center;}
+.profile-pic{ width:240px; height:240px; border-radius:50%; object-fit:cover; box-shadow:var(--shadow-md); border:4px solid white; }
+.about-text h2{ font-size:2.5rem; margin-bottom:25px;}
+.about-text p{ font-size:1.1rem; margin-bottom:20px;}
+
+/* Footer */
+footer{ padding:60px 20px; background: var(--dark); color: rgba(255,255,255,0.7); text-align:center; }
+.footer-links{ display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:30px;}
+.footer-links a{ color:white; padding:8px 16px; background:rgba(255,255,255,0.1); border-radius:6px; font-size:0.9rem; font-weight:600; transition:all 0.3s ease;}
+.footer-links a:hover{ background:var(--primary); transform:translateY(-3px) scale(1.05);}
+
+/* Cursor Trail */
+#cursor-trail{ position:fixed; top:0; left:0; pointer-events:none; z-index:200;}
+.trail-particle{ position:absolute; width:8px; height:8px; background-color: var(--primary); border-radius:50%; opacity:0; transform:scale(1); transition: transform 1s ease-out, opacity 1s ease-out, background-color 1s ease-out; }
+
+/* Responsive */
+@media(max-width:768px){
+    nav{ justify-content:center; padding:15px; }
+    .hero h1{ font-size:2.2rem; }
+    .about-section{text-align:center;}
+    .profile-pic{ width:180px; height:180px;}
+    #cursor-trail{ display:none;}
+}
+</style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+
+<div id="background-slideshow">
+    <div id="slideshow-img-1"></div>
+    <div id="slideshow-img-2"></div>
+    <div id="slideshow-img-3"></div>
+    <div id="slideshow-img-4"></div>
+    <div id="slideshow-img-5"></div>
+</div>
+
+<nav>
+    <a href="#home">Home</a>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero" id="home">
+    <canvas id="hero-particles"></canvas>
+    <h1 id="typed-title"></h1>
+    <h2 id="dynamic-subtitle"></h2>
+    <a class="btn" href="#work">View My Work</a>
+</section>
+
+<section class="work-section" id="work">
+    <h2 class="section-title">My Work</h2>
+    <div class="work-grid">
+        <a class="project-card" href="https://github.com/RajdipDeb2405122/Flappy-Bird-Project" target="_blank">
+            <div class="project-image-container">
+                <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop" alt="Game Development">
+            </div>
+            <div class="project-info">
+                <h3>Flappy Bird Game</h3>
+                <p>A classic game recreated using C/C++ graphics libraries.</p>
+                <span class="project-link-text">View on GitHub →</span>
+            </div>
+        </a>
+        <a class="project-card" href="https://github.com/RajdipDeb2405122" target="_blank">
+            <div class="project-image-container">
+                <img src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?q=80&w=800&auto=format&fit=crop" alt="GitHub Repositories">
+            </div>
+            <div class="project-info">
+                <h3>GitHub Repositories</h3>
+                <p>Explore my coding projects and contributions.</p>
+                <span class="project-link-text">View Profile →</span>
+            </div>
+        </a>
+        <a class="project-card" href="https://www.linkedin.com/in/rajdip-deb-52a270399/" target="_blank">
+            <div class="project-image-container">
+                <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=800&auto=format&fit=crop" alt="Professional Profile">
+            </div>
+            <div class="project-info">
+                <h3>Professional Profile</h3>
+                <p>Connect with me professionally to view skills and achievements.</p>
+                <span class="project-link-text">Connect on LinkedIn →</span>
+            </div>
+        </a>
+    </div>
+</section>
+
+<section class="about-section" id="about">
+    <div class="profile-pic-container">
+        <img class="profile-pic" src="Rajdip Image main.jpg" alt="Rajdip Deb">
+    </div>
+    <div class="about-text">
+        <h2>About Me</h2>
+        <p>Hi! I’m Rajdip, pursuing my undergrad in CSE at BUET, Dhaka.</p>
+        <p>Passionate about coding, UI design, and competitive programming. I love exploring new tech and building impactful projects.</p>
+    </div>
+</section>
+
+<footer id="contact">
+    © 2025 Rajdip Deb • Let's Connect
+    <div class="footer-links">
+        <a href="mailto:rajdiptadeb2006@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/rajdip-deb-52a270399/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/RajdipDeb2405122" target="_blank">GitHub</a>
+        <a href="https://x.com/rajdip_deb_" target="_blank">X</a>
+        <a href="https://www.facebook.com/profile.php?id=61583990412661" target="_blank">Facebook</a>
+        <span style="flex-basis:100%; height:10px;"></span>
+        <a href="https://codeforces.com/profile/2405122_Rajdip_Deb" target="_blank">Codeforces</a>
+        <a href="https://leetcode.com/u/Rajdip_Deb/" target="_blank">LeetCode</a>
+        <a href="https://atcoder.jp/users/Rajdip_Deb" target="_blank">AtCoder</a>
+        <a href="https://www.codechef.com/users/rajdip_deb" target="_blank">CodeChef</a>
+    </div>
+</footer>
+
+<div id="cursor-trail"></div>
+
+<script>
+// Scroll Progress
+const progressBar=document.getElementById('scroll-progress');
+window.addEventListener('scroll',()=>{ 
+    const totalHeight=document.documentElement.scrollHeight-document.documentElement.clientHeight; 
+    progressBar.style.width=((window.scrollY/totalHeight)*100)+'%';
+});
+
+// Cursor Trail
+const trailContainer=document.getElementById('cursor-trail');
+const colors=['#00b4d8','#0096b4','#48cae4','#90e0ef','#ade8f4'];
+let particles=[];
+document.addEventListener('mousemove',(e)=>{
+    const particle=document.createElement('div');
+    particle.className='trail-particle';
+    const size=Math.random()*5+3;
+    particle.style.width=particle.style.height=`${size}px`;
+    particle.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    particle.style.left=`${e.clientX-size/2}px`;
+    particle.style.top=`${e.clientY-size/2}px`;
+    trailContainer.appendChild(particle);
+    particles.push(particle);
+    setTimeout(()=>{ particle.style.opacity='0'; particle.style.transform=`scale(0.1) translate(${Math.random()*50-25}px,${Math.random()*50-25}px)`; },10);
+    setTimeout(()=>{ particle.remove(); particles=particles.filter(p=>p!==particle); },1000);
+    if(particles.length>10){ particles[0].remove(); particles.shift(); }
+});
+
+// Project Card Tilt
+document.querySelectorAll('.project-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+        const rect=card.getBoundingClientRect();
+        const x=e.clientX-rect.left, y=e.clientY-rect.top;
+        const rotateX=(rect.height/2-y)/ (rect.height/2)*5;
+        const rotateY=(x-rect.width/2)/ (rect.width/2)*5;
+        card.style.transform=`perspective(1000px) translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    });
+    card.addEventListener('mouseleave',()=>{ card.style.transform='perspective(1000px) translateY(-8px) rotateX(0deg) rotateY(0deg)'; });
+});
+
+// Typing Animation for Hello
+const titleText = "Hello, I’m Rajdip Deb";
+const typedTitle = document.getElementById('typed-title');
+let i = 0;
+function typeTitle() {
+    if (i < titleText.length) {
+        typedTitle.textContent += titleText[i];
+        i++;
+        typedTitle.style.opacity = 1;
+        typedTitle.style.transform = 'translateX(0)';
+        setTimeout(typeTitle, 120);
+    }
+}
+typeTitle();
+
+// Rotate Subtitle with fade-in
+const subtitles=['CSE Student','Game Developer','Problem Solver','Tech Enthusiast','UI/UX Lover'];
+const subtitleElem=document.getElementById('dynamic-subtitle');
+let subIndex=0;
+function rotateSubtitle(){
+    subtitleElem.style.opacity=0;
+    setTimeout(()=>{
+        subtitleElem.textContent=subtitles[subIndex];
+        subtitleElem.style.opacity=1;
+        subIndex=(subIndex+1)%subtitles.length;
+    },300);
+}
+setTimeout(rotateSubtitle, 1500); // delay to show title first
+setInterval(rotateSubtitle,2500);
+
+// Fade in CTA button after title
+const btn = document.querySelector('.btn');
+setTimeout(()=>{
+    btn.style.opacity = 1;
+    btn.style.transform = 'translateY(0)';
+}, titleText.length*120 + 500); 
+
+// Particle Background
+const canvas=document.getElementById('hero-particles');
+const ctx=canvas.getContext('2d');
+let particlesArray=[], mouse={x:null,y:null};
+function resizeCanvas(){ canvas.width=canvas.offsetWidth; canvas.height=canvas.offsetHeight; initParticles();}
+window.addEventListener('resize', resizeCanvas);
+canvas.addEventListener('mousemove',e=>{ mouse.x=e.x; mouse.y=e.y; });
+
+class Particle{
+    constructor(){ 
+        this.x=Math.random()*canvas.width; 
+        this.y=Math.random()*canvas.height; 
+        this.size=Math.random()*3+1; 
+        this.speedX=(Math.random()-0.5)*1.5; 
+        this.speedY=(Math.random()-0.5)*1.5; 
+        this.color='rgba(0,180,216,0.8)'; 
+    }
+    update(){
+        this.x+=this.speedX; this.y+=this.speedY;
+        if(this.x<0||this.x>canvas.width) this.speedX*=-1;
+        if(this.y<0||this.y>canvas.height) this.speedY*=-1;
+        if(mouse.x&&mouse.y){
+            let dx=mouse.x-this.x, dy=mouse.y-this.y;
+            let dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<100){ this.x-=dx*0.02; this.y-=dy*0.02; }
+        }
+    }
+    draw(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color; ctx.fill(); }
+}
+function initParticles(){ particlesArray=[]; let count=Math.floor(canvas.width*canvas.height/15000); for(let i=0;i<count;i++) particlesArray.push(new Particle()); }
+function connectParticles(){ 
+    for(let a=0;a<particlesArray.length;a++){
+        for(let b=a;b<particlesArray.length;b++){
+            let dx=particlesArray[a].x-particlesArray[b].x, dy=particlesArray[a].y-particlesArray[b].y;
+            let dist=Math.sqrt(dx*dx+dy*dy);
+            if(dist<120){ ctx.strokeStyle=`rgba(0,180,216,${1-dist/120})`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(particlesArray[a].x,particlesArray[a].y); ctx.lineTo(particlesArray[b].x,particlesArray[b].y); ctx.stroke(); }
+        }
+    }
+}
+function animateParticles(){ ctx.clearRect(0,0,canvas.width,canvas.height); particlesArray.forEach(p=>{p.update();p.draw();}); connectParticles(); requestAnimationFrame(animateParticles);}
+resizeCanvas(); initParticles(); animateParticles();
+</script>
+</body>
+</html>
